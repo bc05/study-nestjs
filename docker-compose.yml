@@ -1,0 +1,11 @@
+version: '3'
+services:
+  service_postgres:
+    container_name: db
+    image: postgres:12.3
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./.docker/data/postgres:/data/postgres
+    env_file:
+      - docker.env
