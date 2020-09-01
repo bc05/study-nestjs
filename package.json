@@ -1,8 +1,8 @@
 {
   "name": "study-nestjs",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Project to study NestJS",
+  "author": "Odilon Garcez <odilon.garcez.moraes@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
