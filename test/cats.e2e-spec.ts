@@ -1,9 +1,9 @@
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
-import { Test } from '@nestjs/testing';
 
-import { CatsModule } from '../src/modules/cats/cats.module';
+import setUp from './common/setUp';
 import { CatsService } from '../src/modules/cats/cats.service';
+import { async } from 'rxjs';
 
 describe('Cats', () => {
   let app: INestApplication;
@@ -17,25 +17,22 @@ describe('Cats', () => {
   };
 
   beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [CatsModule],
-    })
-      .overrideProvider(CatsService)
-      .useValue(catsService)
-      .compile();
-
-    app = moduleRef.createNestApplication();
-    await app.init();
+    const { app: setUpApp } = await setUp([
+      { provide: CatsService, useValue: catsService },
+    ]);
+    app = setUpApp;
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it(`/GET cats`, async () => {
-    const response = await request(app.getHttpServer()).get('/cats');
+  describe('List Cats: /cats (GET)', () => {
+    it('should return list of cats', async () => {
+      const response = await request(app.getHttpServer()).get('/cats');
 
-    expect(response.status).toBe(HttpStatus.OK);
-    expect(response.body).toEqual(catsService.findAll());
+      expect(response.status).toBe(HttpStatus.OK);
+      expect(response.body).toEqual(catsService.findAll());
+    });
   });
 });
