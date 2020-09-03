@@ -3,7 +3,6 @@ import * as request from 'supertest';
 
 import setUp from './common/setUp';
 import { CatsService } from '../src/modules/cats/cats.service';
-import { async } from 'rxjs';
 
 describe('Cats', () => {
   let app: INestApplication;
@@ -28,11 +27,10 @@ describe('Cats', () => {
   });
 
   describe('List Cats: /cats (GET)', () => {
-    it('should return list of cats', async () => {
-      const response = await request(app.getHttpServer()).get('/cats');
-
-      expect(response.status).toBe(HttpStatus.OK);
-      expect(response.body).toEqual(catsService.findAll());
+    it('should return list of cats', async done => {
+      request(app.getHttpServer())
+        .get('/cats')
+        .expect(HttpStatus.OK, catsService.findAll(), done);
     });
   });
 });
