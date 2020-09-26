@@ -4,9 +4,9 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './modules/cats/cats.module';
-import { DatabaseModule } from './modules/database/database.module';
 
 import * as Joi from '@hapi/joi';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
