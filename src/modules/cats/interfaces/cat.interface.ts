@@ -1,5 +1,7 @@
+import { BreedType } from '../breedType.entity';
+
 export interface ICat {
   id: number;
   name: string;
-  breed: string;
+  breedType: BreedType;
 }

@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { BreedType } from './breedType.entity';
 
 @Entity()
 export class Cat {
@@ -8,6 +16,10 @@ export class Cat {
   @Column({ type: 'text' })
   name: string;
 
-  @Column({ type: 'text' })
-  breed: string;
+  @ManyToOne(
+    () => BreedType,
+    breedType => breedType.cats,
+  )
+  @JoinColumn({ name: 'breed_type_id' })
+  breedType: BreedType;
 }

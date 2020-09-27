@@ -1,24 +1,24 @@
+import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import * as OrmConfig from './database/ormconfig';
 import { CatsModule } from './modules/cats/cats.module';
-
-import * as Joi from '@hapi/joi';
-import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
     CatsModule,
-    DatabaseModule,
+    TypeOrmModule.forRoot(OrmConfig),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
-        TYPEORM_HOST: Joi.string().required(),
-        TYPEORM_PORT: Joi.number().required(),
-        TYPEORM_USERNAME: Joi.string().required(),
-        TYPEORM_PASSWORD: Joi.string().required(),
-        TYPEORM_DATABASE: Joi.string().required(),
+        DB_HOST: Joi.string().required(),
+        DB_PORT: Joi.number().required(),
+        DB_USERNAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_DATABASE: Joi.string().required(),
       }),
     }),
   ],
